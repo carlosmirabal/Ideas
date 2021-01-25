@@ -13,7 +13,7 @@
         <!-- <div class="row"> -->
             <div class="col-4 float-left form-group bg-dark ">
                 <!-- <h3>Notas</h3> -->
-                    <form action="{{url('crear')}}" method="POST">
+                    <form method="POST" onsubmit="crear">
                         <br><br>
                     @csrf
                         <label for="fname">Título</label>
