@@ -8,15 +8,26 @@ use Illuminate\Support\Facades\DB;
 
 class NoteController extends Controller
 {
-    public function mostrar() {
-        $notas=DB::table('notes')->get();
-        return view('mostrar', compact('notas'));
+    public function inicio() {
+        return view("mostrar");
+    }
+    public function mostrar(Request $request) {
+        $filtro = $request->input('filtro');
+        if ($filtro == "") {
+            $notas=DB::select('SELECT * FROM notes');
+        }else {
+            $notas=DB::select('SELECT * FROM notes WHERE tittle LIKE ?', ["%".$filtro."%"]);
+        }
+        return response()->json($notas, 200);
     }
 
     public function crear(Request $request) {
-        $datosForm = $request->except('_token','Submit');
-        DB::table('notes')->insertGetId(['tittle'=>$datosForm['title'],'description'=>$datosForm['description']]);
-        return redirect('mostrar');
+        try {
+            DB::insert('INSERT INTO notes(tittle,`description`) VALUES(?,?)', [$request->input('title'), $request->input('desc')]);
+            return response()->json(array('resultado'=>'OK'), 200);
+        } catch (\Throwable $th) {
+            return response()->json(array('resultado'=>'NOK'.$th->getMessage()), 200);
+        }
     } 
 
     public function eliminar($id){
@@ -24,12 +35,34 @@ class NoteController extends Controller
         return redirect('mostrar');
     }
 
-    public function actualizar($id, Request $request){
-        $notas=$request->except('_token', '_method','Enviar');
-        // return $notas;
-        DB::table('notes')->where('id' ,'=',$id )->update($notas);
-        //redirigir a la BBDD
-        return redirect('mostrar');
+    public function notasContent(Request $request){
+        try {
+            $qry=DB::select('SELECT * FROM notes WHERE id=?', [$request->input('id')]);
+            return response()->json($qry, 200);
+        } catch (\Throwable $th) {
+            return response()->json(array('resultado'=>'NOK'.$th->getMessage()), 200);
+        }
+    }
+
+    public function updateNotas(Request $request){
+        try {
+            DB::update('UPDATE notes set tittle=?, `description`=? WHERE id=?', [$request->input('title'),$request->input('desc'),$request->input('id')]);
+            //redirigir a la BBDD
+            return response()->json(array('resultado'=>'OK'), 200);
+        } catch (\Throwable $th) {
+            return response()->json(array('resultado'=>'NOK'.$th->getMessage()), 200);
+            //throw $th;
+        }
+    }
+    public function notasDelete(Request $request){
+        try {
+            DB::delete('DELETE FROM notes WHERE id=?', [$request->input('id'),$request->input('id')]);
+            //redirigir a la BBDD
+            return response()->json(array('resultado'=>'OK'), 200);
+        } catch (\Throwable $th) {
+            return response()->json(array('resultado'=>'NOK'.$th->getMessage()), 200);
+            //throw $th;
+        }
     }
 
     public function index()

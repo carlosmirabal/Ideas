@@ -17,7 +17,11 @@ use App\Http\Controllers\NoteController;
 // Route::get('/', function () {
 //     return view('welcome');
 // });
-Route::get('/mostrar', [NoteController::class, 'mostrar']);
-Route::post('/crear', [NoteController::class, 'crear']);
-Route::delete('/borrar/{id}', [NoteController::class, 'eliminar']);
-Route::put('/actualizar/{id}', [NoteController::class, 'actualizar']);
+Route::get('/', [NoteController::class, 'inicio']);
+Route::post('mostrar', [NoteController::class, 'mostrar']);
+Route::post('crear', [NoteController::class, 'crear']);
+Route::post('updateNotas', [NoteController::class, 'updateNotas']);
+Route::post('notasContent', [NoteController::class, 'notasContent']);
+Route::post('notasDelete', [NoteController::class, 'notasDelete']);
+// Route::delete('/borrar/{id}', [NoteController::class, 'eliminar']);
+// Route::put('/actualizar/{id}', [NoteController::class, 'actualizar']);
