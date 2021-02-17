@@ -16,9 +16,9 @@
         <!-- <div class="row"> -->
             <div class="col-4 float-left form-group bg-dark ">
                 <!-- <h3>Notas</h3> -->
-                    <label for="buscador">Buscador</label>
-                    <br>
-                    <input type="text" id="buscador" onkeyup="mostrarNotas()">
+                        <label for="buscador">Buscador</label>
+                        <br>
+                        <input type="text" class="form-control" id="buscador" onkeyup="mostrarNotas()">
                     <form method="POST" onsubmit="crearNota(); return false;">
                         <br><br>
 
@@ -49,7 +49,7 @@
                 <form action="" class="modal-form " method="POST" onsubmit="updateNotas(); return false;">
                     <input type="hidden" name="id" id="idUpdate">
                     <label for="title">Titulo</label>
-                    <input type="text" class="form-control" name="tittle" value="" id="titleUpdate">
+                    <input type="text" class="form-control" name="title" value="" id="titleUpdate">
                     <label for="title">Descripción</label>
                     <input type="text" class="form-control" name="description" value="" id="descUpdate"> <br>
                     <input type="submit" class="form-control btn btn-primary" name="Enviar" value="Modificar">

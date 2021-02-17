@@ -85,6 +85,8 @@ function crearNota() {
         if (ajax.readyState == 4 && ajax.status == 200) {
             var respuesta = JSON.parse(ajax.responseText);
             if (respuesta.resultado == 'OK') {
+                document.getElementById('title').value= "";
+                document.getElementById('desc').value = "";
                 msg.innerHTML= "Nota Creada Correctamente";
                 msg.style.color= "green";
                 
